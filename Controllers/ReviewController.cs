@@ -17,13 +17,13 @@ namespace CodeAIReviewAPI.Controllers
             _aiService = aiService;
         }
         [HttpPost]
-        public IActionResult PostFileChanges([FromBody] List<FileChange> fileChanges)
+        public async Task<IActionResult> PostFileChanges([FromBody] List<FileChange> fileChanges)
         {
             // Get the Firebase token
             var userId = User.FindFirst("user_id")?.Value;
             if (userId == null) return Unauthorized();
 
-            var response = _aiService.ReviewCodeChanges(fileChanges);
+            var response = await _aiService.ReviewCodeChanges(fileChanges);
 
             return Ok(response);
         }

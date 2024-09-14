@@ -8,11 +8,16 @@ namespace CodeAIReviewAPI.Services
 {
     public class AiService : IAiService
     {
+        private readonly IConfiguration _configuration;
+        public AiService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public async Task<AiCodeReviewResult> ReviewCodeChanges(List<FileChange> fileChanges)
         {
             // Get environment variables for OpenAI
-            string endpoint = "https://codestackopenaitest.openai.azure.com/";
-            string key = "6eb34119b258412390fde88dbef08eea";
+            string endpoint = _configuration["AzureAI:Endpoint"];
+            string key = _configuration["AzureAI:Key"];
 
             // Create the OpenAI client
             AzureKeyCredential credential = new AzureKeyCredential(key);
@@ -42,6 +47,10 @@ namespace CodeAIReviewAPI.Services
             if (startIndex != -1 && endIndex != -1)
             {
                 response = response.Substring(startIndex, endIndex - startIndex + 1);
+            }
+            if (response == null)
+            {
+                throw new Exception("Error processessing response");
             }
             //response is in json, need to convert to AiCodeReviewResult and return;
             return JsonSerializer.Deserialize<AiCodeReviewResult>(response);
