@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAIReviewAPI", "CodeAIReviewAPI.csproj", "{7ADBC295-9039-4502-A697-D2B01C439364}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ADBC295-9039-4502-A697-D2B01C439364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ADBC295-9039-4502-A697-D2B01C439364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ADBC295-9039-4502-A697-D2B01C439364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ADBC295-9039-4502-A697-D2B01C439364}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BBF8CA0-21B4-427C-B2A9-3FD315C443F4}
+	EndGlobalSection
+EndGlobal
