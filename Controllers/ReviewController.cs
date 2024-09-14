@@ -1,4 +1,5 @@
 ﻿using CodeAIReviewAPI.Models;
+using CodeAIReviewAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,12 @@ namespace CodeAIReviewAPI.Controllers
     [Authorize]
     public class ReviewController : ControllerBase
     {
+        private readonly IAiService _aiService;
+
+        public ReviewController(IAiService aiService)
+        {
+            _aiService = aiService;
+        }
         [HttpPost]
         public IActionResult PostFileChanges([FromBody] List<FileChange> fileChanges)
         {
@@ -16,8 +23,9 @@ namespace CodeAIReviewAPI.Controllers
             var userId = User.FindFirst("user_id")?.Value;
             if (userId == null) return Unauthorized();
 
-            // Your logic for processing file changes and returning AI suggestions
-            return Ok("Success");
+            var response = _aiService.ReviewCodeChanges(fileChanges);
+
+            return Ok(response);
         }
     }
 }
