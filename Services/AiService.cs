@@ -28,18 +28,17 @@ namespace CodeAIReviewAPI.Services
                 [
                     // System messages represent instructions or other guidance about how the assistant should behave
                     new SystemChatMessage("You're an AI code reviewer. You get pull request file changes and you reply with helpful code suggestions if appropriate. If the code is C#, you should use common C# code conventions as explained here: https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions. If the code is Angular, use the Angular style guide. If a different framework, try to determine the framework and use the appropriate style guide and standards. You will receive the file changes in a JSON packet like this [{\"fileName\": \"GitTestMerge/Services/Service1.cs\", \"patch\": \"code updates and deletions\"}]. After processing the data, return the results as a JSON packet like this {\"standards\": \"comma separated list with one or more standards applied to the code (example Angular Style Guide, C# Style Guide etc).\", \"score\": \"score from 1 to 10. 1 would be poor quality code, 10 would be exceptional code quality.\", \"codeReview\":[{\"fileName\": \"fileName\", \"review\": \"string will contain the code suggestions, if any. Can be left empty if there are no suggestions.\"}]}"),
-        new UserChatMessage(System.Text.Json.JsonSerializer.Serialize(fileChanges)),
-    ],
+                    new UserChatMessage(JsonSerializer.Serialize(fileChanges)),
+                ],
                  new ChatCompletionOptions()
                  {
                      Temperature = (float)0.7,
-                     MaxTokens = 800,
+                     MaxTokens = 1000,
                      FrequencyPenalty = (float)0,
                      PresencePenalty = (float)0,
                  }
                 );
 
-            //Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
             var response = completion.Content[0].Text;
             // Trim from the first '{' to the last '}' to ensure valid JSON format
             int startIndex = response.IndexOf('{');
@@ -52,7 +51,7 @@ namespace CodeAIReviewAPI.Services
             {
                 throw new Exception("Error processessing response");
             }
-            //response is in json, need to convert to AiCodeReviewResult and return;
+
             return JsonSerializer.Deserialize<AiCodeReviewResult>(response);
         }
     }
