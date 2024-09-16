@@ -33,7 +33,7 @@ namespace CodeAIReviewAPI.Services
                  new ChatCompletionOptions()
                  {
                      Temperature = (float)0.7,
-                     MaxTokens = 1000,
+                     MaxTokens = 4096,
                      FrequencyPenalty = (float)0,
                      PresencePenalty = (float)0,
                  }
